@@ -19,6 +19,9 @@ public static class Game {
       //Bake AudioManager so there's an audio listener in the scene
       #pragma warning disable 219
       AudioManager bakedAudioManager = AudioManager.Instance;
+      if(GameConfig.Instance.clubPrefabs != null && GameConfig.Instance.clubPrefabs.Length > 0) {
+        ClubPrefab = GameConfig.Instance.clubPrefabs[0];
+      }
     }
   }
 

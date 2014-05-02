@@ -5,6 +5,7 @@ public class GameConfig : ScriptableObject {
   }
 
   public int maxLives = 8;
+  public bool autoRun = true;
 
   [Range(0, 4f)]
   public float cameraDelayOnDeath = 2f;

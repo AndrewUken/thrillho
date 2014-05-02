@@ -27,6 +27,12 @@ public class Monster : Unit {
   public virtual void OnAggro() {
     //Override this to allow shooting
   }
+  
+  public override void Die () {
+    if(state == MonsterStates.Aggro) {
+      base.Die();
+    }
+  }
 
   private void FireUpdate() {
     if(unitConfig == null || unitConfig.autoShoot == false) {

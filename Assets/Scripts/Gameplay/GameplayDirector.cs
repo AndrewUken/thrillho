@@ -84,6 +84,7 @@ public class GameplayDirector : MonoBehaviour {
   }
 
   public void LoadLevel(int index) {
+    Lives = GameConfig.Instance.maxLives;
     if(index > levels.Length - 1) {
       //Last level beaten game over with win
       GameOver(true);

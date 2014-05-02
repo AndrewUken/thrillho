@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 [RequireComponent (typeof(Hero))]
 public class CarvalloAnimator : MonoBehaviour {
@@ -25,7 +26,7 @@ public class CarvalloAnimator : MonoBehaviour {
       sr.sortingLayerName = "player";
     }
 
-    GameObject weaponMount = rig.FindChildRecursive("R_weapon");
+    GameObject weaponMount = rig.GetComponentsInChildren<WeaponMount>(true).First(wm => wm.hand2 == false).gameObject;
     if(Game.ClubPrefab != null && weaponMount != null){
       GameObject club = GameObject.Instantiate(Game.ClubPrefab, weaponMount.transform.position, Quaternion.identity) as GameObject;
       club.transform.parent = weaponMount.transform;
@@ -33,10 +34,10 @@ public class CarvalloAnimator : MonoBehaviour {
     }
     
     //Spawn a second weapon for animation, only one is visible at a time
-    GameObject weaponMount2 = rig.FindChildRecursive("R_weapon2");
+    GameObject weaponMount2 = rig.GetComponentsInChildren<WeaponMount>(true).First(wm => wm.hand2 == true).gameObject;
     if(Game.ClubPrefab != null && weaponMount2 != null) {
-      GameObject club = GameObject.Instantiate(Game.ClubPrefab, weaponMount.transform.position, Quaternion.identity) as GameObject;
-      club.transform.parent = weaponMount.transform;
+      GameObject club = GameObject.Instantiate(Game.ClubPrefab, weaponMount.transform.position, weaponMount.transform.rotation) as GameObject;
+      club.transform.parent = weaponMount2.transform;
       club.transform.localScale = Vector3.one;
     }
   }

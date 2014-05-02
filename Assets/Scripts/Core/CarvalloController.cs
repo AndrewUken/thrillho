@@ -47,7 +47,7 @@ public class CarvalloController : MonoBehaviour {
 
   public CarvalloAnimator animator;
 
-	void Start () {
+  void Start () {
 		initialGravity = rigidbody2D.gravityScale;
     footLayer = LayerMask.NameToLayer("foot");
     platformLayer = LayerMask.NameToLayer("platform");
@@ -79,7 +79,7 @@ public class CarvalloController : MonoBehaviour {
   }
 
   void FixedRun(float horizontal, float vertical){
-		bool running = Input.GetButton(InputAxes.RUN);
+		bool running = Input.GetButton(InputAxes.RUN) || GameConfig.Instance.autoRun;
     bool locked = Input.GetButton(InputAxes.LOCK);
 		float topSpeed = running ? runTopSpeed : walkTopSpeed;
 		if(horizontal != 0 && !locked){
@@ -148,7 +148,7 @@ public class CarvalloController : MonoBehaviour {
       MeleeFired(horizontal,vertical);
     }
     if(Input.GetButton(InputAxes.ATTACK_RANGED)){
-      RangedFired(horizontal,vertical);
+//      RangedFired(horizontal,vertical);
     }
   }
 

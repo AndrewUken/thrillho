@@ -15,6 +15,8 @@ public class ClubSelector : MonoBehaviour {
   bool acceptingInput = false;
   private int clubIndex = 300;
 
+  public float clubSelectTimeout = 0.24f;
+
 	// Use this for initialization
 	void Start () {
     Game.Initialize();
@@ -43,13 +45,23 @@ public class ClubSelector : MonoBehaviour {
     for(int i = 0; i < clubSprites.Length; i++) {
       clubSprites[i].SetActive(ValidIndex == i);
     }
-    if(Input.GetKeyDown("left")) {
-      Left();
-    } else if(Input.GetKeyDown("right")) {
-      Right();
-    } else if(acceptingInput && Input.anyKeyDown) {
-      SelectClub();
-      acceptingInput = false;
+    if(acceptingInput) {
+      if(Input.GetAxis(InputAxes.HORIZONTAL) < 0f) {
+        Left();
+        acceptingInput = false;
+        UkenTimer.SetTimeout(clubSelectTimeout, () => {
+          acceptingInput = true;
+        });
+      } else if(Input.GetAxis(InputAxes.HORIZONTAL) > 0f) {
+        Right();
+        acceptingInput = false;
+        UkenTimer.SetTimeout(clubSelectTimeout, () => {
+          acceptingInput = true;
+        });
+      } else if(Input.anyKeyDown) {
+        SelectClub();
+        acceptingInput = false;
+      }
     }
 	}
 
